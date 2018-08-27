@@ -1,10 +1,11 @@
-package com.projects.enzoftware.apiqrreader
+package com.projects.enzoftware.apiqrreader.ui
 
 import android.Manifest
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.util.Log
-import com.projects.enzoftware.apiqrreader.utils.GetQrCodeInformation
+import com.projects.enzoftware.apiqrreader.R
+import com.projects.enzoftware.apiqrreader.utils.getQrCodeInformation
 import com.projects.enzoftware.apiqrreader.utils.requestPermission
 import io.fotoapparat.Fotoapparat
 import io.fotoapparat.log.fileLogger
@@ -42,12 +43,12 @@ class MainActivity : AppCompatActivity() {
             fotoapparat.start()
         }
 
-        take_picture_btn.setOnClickListener {
+        fab_camera_btn.setOnClickListener {
             val photoResult = fotoapparat.autoFocus().takePicture()
             photoResult
                     .toBitmap()
                     .whenAvailable {bitmapPhoto ->
-                        GetQrCodeInformation(bitmapPhoto!!.bitmap,this)
+                        getQrCodeInformation(bitmapPhoto!!.bitmap,this)
                     }
         }
 
