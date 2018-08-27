@@ -14,6 +14,9 @@ import io.fotoapparat.log.loggers
 import io.fotoapparat.parameter.ScaleType
 import io.fotoapparat.selector.back
 import kotlinx.android.synthetic.main.activity_main.*
+import android.R.attr.bitmap
+import android.content.Intent
+import com.projects.enzoftware.apiqrreader.utils.getQRCodeDetails
 
 
 class MainActivity : AppCompatActivity() {
@@ -50,7 +53,8 @@ class MainActivity : AppCompatActivity() {
                 photoResult
                         .toBitmap()
                         .whenAvailable {bitmapPhoto ->
-                            getQrCodeInformation(bitmapPhoto!!.bitmap)
+                            //getQrCodeInformation(bitmapPhoto!!.bitmap)
+                            getQRCodeDetails(bitmapPhoto!!.bitmap)
                         }
             }
 
