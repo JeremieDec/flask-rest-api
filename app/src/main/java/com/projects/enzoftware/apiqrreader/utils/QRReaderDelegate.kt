@@ -7,41 +7,16 @@ import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcode
 import com.google.firebase.ml.vision.barcode.FirebaseVisionBarcodeDetectorOptions
 import com.google.firebase.ml.vision.common.FirebaseVisionImage
 
-
-fun getQrCodeInformation(barcodeImage : Bitmap){
-    val  options = FirebaseVisionBarcodeDetectorOptions.Builder()
-            .setBarcodeFormats(
-                    FirebaseVisionBarcode.FORMAT_QR_CODE,
-                    FirebaseVisionBarcode.FORMAT_AZTEC)
-            .build()
-
-    val image = FirebaseVisionImage.fromBitmap(barcodeImage)
-
-    val detector = FirebaseVision.getInstance().getVisionBarcodeDetector(options)
-
-    detector.detectInImage(image)
-            .addOnSuccessListener {
-                Log.i("SIZE",it.size.toString())
-                for (barcode in it) {
-                    val rawValue = barcode.rawValue.toString()
-                    Log.i("BARCODE VALUES", rawValue)
-                }
-            }
-            .addOnFailureListener {
-                Log.e("ERROR",it.message)
-            }
-}
-
-
 fun getQRCodeDetails(bitmap: Bitmap) {
     val options = FirebaseVisionBarcodeDetectorOptions.Builder()
             .setBarcodeFormats(
-                    FirebaseVisionBarcode.FORMAT_ALL_FORMATS)
+                    FirebaseVisionBarcode.FORMAT_QR_CODE)
             .build()
     val detector = FirebaseVision.getInstance().getVisionBarcodeDetector(options)
     val image = FirebaseVisionImage.fromBitmap(bitmap)
     detector.detectInImage(image)
             .addOnSuccessListener {
+                Log.i("BARCODE SIZE","${it.size}")
                 for (firebaseBarcode in it) {
 
                     val displayValue = firebaseBarcode.displayValue //Display contents inside the barcode
@@ -56,7 +31,7 @@ fun getQRCodeDetails(bitmap: Bitmap) {
                         //Handle more type of Barcodes
                     }
 
-                    Log.i("BARCODE VALUE",displayValue)
+                    Log.i("BARCODE VALUE","$displayValue ${firebaseBarcode.url}")
 
                 }
             }
