@@ -23,9 +23,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        val permissionRequest = requestPermission(this, Manifest.permission.CAMERA)
-
-        if(permissionRequest){
+        val permissionInternetRequest = requestPermission(this, android.Manifest.permission.INTERNET)
+        val permissionCameraRequest = requestPermission(this, Manifest.permission.CAMERA)
+        if(permissionCameraRequest){
             fotoapparat = Fotoapparat(
                     context = applicationContext,
                     view = camera_view,                   // view which will draw the camera preview
@@ -45,11 +45,15 @@ class MainActivity : AppCompatActivity() {
 
         fab_camera_btn.setOnClickListener {
             val photoResult = fotoapparat.autoFocus().takePicture()
-            photoResult
-                    .toBitmap()
-                    .whenAvailable {bitmapPhoto ->
-                        getQrCodeInformation(bitmapPhoto!!.bitmap,this)
-                    }
+
+            if(permissionInternetRequest){
+                photoResult
+                        .toBitmap()
+                        .whenAvailable {bitmapPhoto ->
+                            getQrCodeInformation(bitmapPhoto!!.bitmap)
+                        }
+            }
+
         }
 
     }
