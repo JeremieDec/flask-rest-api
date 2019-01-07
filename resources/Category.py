@@ -7,12 +7,14 @@ category_schema = CategorySchema()
 
 
 class CategoryResource(Resource):
-    def get(self):
+    @staticmethod
+    def get():
         categories = Category.query.all()
         categories = categories_schema.dump(categories).data
         return {'status': 'success', 'data': categories}, 200
 
-    def post(self):
+    @staticmethod
+    def post():
         json_data = request.get_json(force=True)
         if not json_data:
             return {'message': 'No input data provided'}, 400
@@ -34,5 +36,35 @@ class CategoryResource(Resource):
 
         return {'status': 'success', 'data': result}, 201
 
+    @staticmethod
+    def put():
+        json_data = request.get_json(force=True)
+        if not json_data:
+            return {'message': 'No input data provided'}, 400
+        data, errors = categories_schema.load(json_data)
+        if errors:
+            return errors, 422
+        category = Category.query.filter_by(id=data['id']).first()
+        if not category:
+            return {'message': 'Category does not exists'}, 400
+        category.name = data['name']
+        db.session.commit()
 
+        result = category_schema.dump(category).data
 
+        return {'status': 'success', 'data': result}, 204
+
+    @staticmethod
+    def delete():
+        json_data = request.get_json(force=True)
+        if not json_data:
+            return {'message': 'No input data provided'}, 400
+        data, errors = categories_schema.load(json_data)
+        if errors:
+            return errors, 422
+        category = Category.query.filter_by(id=data['id']).delete()
+        db.session.commit()
+
+        result = category_schema.dump(category).data
+
+        return {'status': 'success', 'data': result}, 204
