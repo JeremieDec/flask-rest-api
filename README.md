@@ -1,5 +1,11 @@
+<div align="center">
+
+  <img src="https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-004_comment_chat-512.png" width="185px"/>
+
+</div>
+
 # Flask REST API 
-<img src="https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-004_comment_chat-512.png" width="150px"/>
+
 
 ### Requeriments
 - Python 3.x
