@@ -1,10 +1,12 @@
 <div align="center">
 
   <img src="https://cdn2.iconfinder.com/data/icons/picons-basic-2/57/basic2-004_comment_chat-512.png" width="185px"/>
+  
+  # Flask REST API 
 
 </div>
 
-# Flask REST API 
+
 
 
 ### Requeriments
